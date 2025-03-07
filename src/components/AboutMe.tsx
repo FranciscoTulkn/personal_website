@@ -122,16 +122,16 @@ const AboutMe = () => {
                 <div className="text-emerald-400">const developer = {`{`}</div>
                 <div className="pl-4">
                   <span className="text-purple-400">name</span>: 
-                  <span className="text-yellow-300">"TulDev"</span>,
+                  <span className="text-yellow-300">&quot;TulDev&quot;</span>,
                 </div>
                 <div className="pl-4">
                   <span className="text-purple-400">skills</span>: [
-                  <span className="text-yellow-300">"Frontend"</span>, 
-                  <span className="text-yellow-300">"DevOps"</span>],
+                  <span className="text-yellow-300">&quot;Frontend&quot;</span>, 
+                  <span className="text-yellow-300">&quot;DevOps&quot;</span>],
                 </div>
                 <div className="pl-4">
                   <span className="text-purple-400">passion</span>: 
-                  <span className="text-yellow-300">"Creating amazing web experiences"</span>
+                  <span className="text-yellow-300">&quot;Creating amazing web experiences&quot;</span>
                 </div>
                 <div>{`}`};</div>
               </div>
