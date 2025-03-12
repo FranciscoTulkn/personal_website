@@ -3,12 +3,12 @@ import { motion } from 'framer-motion';
 
 const AboutMe = () => {
   const skills = [
-    { name: 'React', level: 90, color: 'from-cyan-400 to-blue-500' },
-    { name: 'Next.js', level: 85, color: 'from-gray-600 to-gray-800' },
-    { name: 'Docker', level: 80, color: 'from-blue-400 to-blue-600' },
-    { name: 'AWS', level: 75, color: 'from-yellow-500 to-orange-500' },
-    { name: 'TypeScript', level: 85, color: 'from-blue-500 to-blue-700' },
-    { name: 'CI/CD', level: 80, color: 'from-green-400 to-emerald-600' },
+    { name: 'React', level: 80, color: 'from-cyan-400 to-blue-500' },
+    { name: 'Next.js', level: 70, color: 'from-purple-600 to-purple-900' },
+    { name: 'Docker', level: 50, color: 'from-blue-400 to-blue-600' },
+    { name: 'AWS', level: 45, color: 'from-yellow-500 to-orange-500' },
+    { name: 'TypeScript', level: 65, color: 'from-blue-500 to-blue-700' },
+    { name: 'CI/CD', level: 40, color: 'from-green-400 to-emerald-600' },
   ];
 
   const experiences = [
@@ -43,8 +43,8 @@ const AboutMe = () => {
             Sobre Mí
           </h2>
           <p className="text-lg text-white/80 max-w-3xl mx-auto">
-            Soy un desarrollador apasionado por crear soluciones web innovadoras y escalables. 
-            Mi experiencia abarca desde el desarrollo frontend hasta la implementación de prácticas DevOps.
+            Desarrollador Web Frontend con experiencia en HTML, CSS, JavaScript y frameworks como React, Angular, Bootstrap y Materialize. Conocimientos en C#, Java y Python. 
+            Actualmente, en transición al mundo DevOps, con manejo de VPS, despliegues en Next.js y Django (usando Poetry), además de herramientas como Jenkins y AWS. Enfoque en el desarrollo de soluciones escalables, optimizadas y alineadas con los requerimientos del cliente.
           </p>
         </motion.div>
 
