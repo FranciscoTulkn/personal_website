@@ -1,29 +1,50 @@
 'use client';
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 
 const Projects = () => {
   const projects = [
     {
-      title: 'E-commerce Platform',
-      description: 'Plataforma de comercio electrónico construida con Next.js y AWS. Implementación completa de CI/CD y arquitectura serverless.',
-      tags: ['Next.js', 'AWS', 'TypeScript', 'Tailwind'],
-      image: '/projects/ecommerce.jpg',
-      link: '#'
+      title: 'Particles Landing Page',
+      description: 'Landing page interactiva con animaciones de partículas y transiciones fluidas, construida con Next.js, Tailwind CSS y Framer Motion.',
+      tags: ['Next.js', 'Tailwind', 'Framer Motion'],
+      icon: '✨',
+      link: 'https://github.com/FranciscoTulkn/particles-landingpage-next-tailwind-framer-motion'
     },
     {
-      title: 'Dashboard Analytics',
-      description: 'Dashboard interactivo para análisis de datos en tiempo real. Integración con múltiples fuentes de datos y visualizaciones personalizadas.',
-      tags: ['React', 'D3.js', 'Node.js', 'Docker'],
-      image: '/projects/dashboard.jpg',
-      link: '#'
+      title: 'Dashboard Proyect',
+      description: 'Panel de control interactivo para visualización y gestión de datos, desarrollado en TypeScript con foco en usabilidad.',
+      tags: ['TypeScript', 'Dashboard'],
+      icon: '📊',
+      link: 'https://github.com/FranciscoTulkn/dashboard-proyect'
     },
     {
-      title: 'Cloud Infrastructure',
-      description: 'Infraestructura cloud automatizada con Terraform y Kubernetes. Monitoreo completo y alta disponibilidad.',
-      tags: ['Terraform', 'K8s', 'AWS', 'DevOps'],
-      image: '/projects/cloud.jpg',
-      link: '#'
+      title: 'TeslaShop Ecommerce',
+      description: 'E-commerce construido con Next.js, Tailwind CSS y Zustand para el manejo de estado, con enfoque en rendimiento y UX.',
+      tags: ['Next.js', 'Tailwind', 'Zustand', 'TypeScript'],
+      icon: '🛒',
+      link: 'https://github.com/FranciscoTulkn/Ecommers-TeslaShop'
+    },
+    {
+      title: 'Pokedex React',
+      description: 'Pokedex interactiva construida en React, consumiendo la PokeAPI en tiempo real con búsqueda y detalle por Pokémon.',
+      tags: ['React', 'API REST'],
+      icon: '🎮',
+      link: 'https://github.com/FranciscoTulkn/pokedex-react',
+      demo: 'https://pokedex-react-weld.vercel.app'
+    },
+    {
+      title: 'Portal Job',
+      description: 'Portal de búsqueda y publicación de empleos, con listados dinámicos e interfaz responsiva en JavaScript.',
+      tags: ['JavaScript', 'UI/UX'],
+      icon: '💼',
+      link: 'https://github.com/FranciscoTulkn/portal-job'
+    },
+    {
+      title: 'Backend Libros API',
+      description: 'API REST en TypeScript para la gestión de una biblioteca: catálogo de libros, préstamos y usuarios.',
+      tags: ['TypeScript', 'API REST', 'Node.js'],
+      icon: '📚',
+      link: 'https://github.com/FranciscoTulkn/Backend-Libros-API'
     }
   ];
 
@@ -48,38 +69,36 @@ const Projects = () => {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
-            <motion.a
+            <motion.div
               key={project.title}
-              href={project.link}
-              target="_blank"
-              rel="noopener noreferrer"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.2 }}
-              className="group relative bg-white/5 backdrop-blur-lg rounded-2xl overflow-hidden border border-white/10 hover:bg-white/10 transition-colors"
+              className="group relative bg-white/5 backdrop-blur-lg rounded-2xl overflow-hidden border border-white/10 hover:bg-white/10 transition-colors flex flex-col"
             >
-              {/* Project Image */}
-              <div className="aspect-video relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10" />
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  width={600}
-                  height={400}
-                  className="object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-              </div>
+              {/* Project Visual */}
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="aspect-video relative overflow-hidden flex items-center justify-center bg-gradient-to-br from-emerald-400/20 via-cyan-400/10 to-black/40"
+              >
+                <span className="text-6xl group-hover:scale-110 transition-transform duration-500">
+                  {project.icon}
+                </span>
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(16,185,129,0.15),transparent_60%)]" />
+              </a>
 
               {/* Project Info */}
-              <div className="p-6">
+              <div className="p-6 flex flex-col flex-1">
                 <h3 className="text-xl font-semibold text-white mb-2">
                   {project.title}
                 </h3>
                 <p className="text-white/70 mb-4">
                   {project.description}
                 </p>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 mb-4">
                   {project.tags.map(tag => (
                     <span
                       key={tag}
@@ -89,11 +108,31 @@ const Projects = () => {
                     </span>
                   ))}
                 </div>
+                <div className="mt-auto flex gap-3 pt-2">
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm font-medium text-white/80 hover:text-emerald-400 transition-colors"
+                  >
+                    Código →
+                  </a>
+                  {project.demo && (
+                    <a
+                      href={project.demo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm font-medium text-emerald-400 hover:text-emerald-300 transition-colors"
+                    >
+                      Ver demo →
+                    </a>
+                  )}
+                </div>
               </div>
 
               {/* Hover Effect */}
               <div className="absolute inset-0 border-2 border-emerald-400/0 rounded-2xl group-hover:border-emerald-400/50 transition-colors pointer-events-none" />
-            </motion.a>
+            </motion.div>
           ))}
         </div>
 

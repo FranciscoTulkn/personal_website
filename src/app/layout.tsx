@@ -6,8 +6,8 @@ import Header from "@/components/Header";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "TulDev | Frontend Developer & DevOps Engineer",
-  description: "Portfolio personal de TulDev, Frontend Developer y DevOps Engineer",
+  title: "Francisco Tulcán | Frontend Developer & DevOps Engineer",
+  description: "Portfolio personal de Francisco Tulcán, Desarrollador Web Frontend y Tecnólogo ADSI en transición a DevOps.",
 };
 
 export default function RootLayout({

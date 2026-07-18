@@ -1,6 +1,22 @@
 'use client';
+import { FormEvent } from 'react';
+
+const CONTACT_EMAIL = 'tufran13@gmail.com';
 
 const Contact = () => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const name = (form.elements.namedItem('name') as HTMLInputElement).value;
+    const email = (form.elements.namedItem('email') as HTMLInputElement).value;
+    const subject = (form.elements.namedItem('subject') as HTMLInputElement).value;
+    const message = (form.elements.namedItem('message') as HTMLTextAreaElement).value;
+
+    const mailSubject = encodeURIComponent(subject || `Contacto desde el portfolio de ${name}`);
+    const mailBody = encodeURIComponent(`${message}\n\n— ${name} (${email})`);
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${mailSubject}&body=${mailBody}`;
+  };
+
   return (
     <section id="contact" className="py-20 px-4 relative overflow-hidden">
       <div className="max-w-7xl mx-auto relative z-10">
@@ -10,15 +26,24 @@ const Contact = () => {
             Hablemos de tu proyecto
           </h2>
           <p className="text-lg text-white/70 max-w-2xl mx-auto leading-relaxed">
-            Estoy disponible para colaborar y crear soluciones web innovadoras. 
+            Estoy disponible para colaborar y crear soluciones web innovadoras.
             Cuéntame sobre tu idea y hagámosla realidad.
           </p>
+          <a
+            href={`mailto:${CONTACT_EMAIL}`}
+            className="inline-flex items-center gap-2 mt-4 text-white/80 hover:text-emerald-400 transition-colors"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+            {CONTACT_EMAIL}
+          </a>
         </div>
 
         <div className="max-w-2xl mx-auto relative">
           <form
             className="space-y-6 backdrop-blur-xl bg-white/5 p-8 rounded-2xl border border-white/10 shadow-2xl"
-            onSubmit={(e) => e.preventDefault()}
+            onSubmit={handleSubmit}
           >
             <div className="grid md:grid-cols-2 gap-6">
               <div className="relative group">
@@ -28,6 +53,8 @@ const Contact = () => {
                 <input
                   type="text"
                   id="name"
+                  name="name"
+                  required
                   className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-400/50 focus:border-transparent text-white backdrop-blur-sm transition-all duration-300 group-hover:border-emerald-400/30"
                   placeholder="¿Cómo te llamas?"
                 />
@@ -40,6 +67,8 @@ const Contact = () => {
                 <input
                   type="email"
                   id="email"
+                  name="email"
+                  required
                   className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-400/50 focus:border-transparent text-white backdrop-blur-sm transition-all duration-300 group-hover:border-emerald-400/30"
                   placeholder="ejemplo@correo.com"
                 />
@@ -53,6 +82,7 @@ const Contact = () => {
               <input
                 type="text"
                 id="subject"
+                name="subject"
                 className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-400/50 focus:border-transparent text-white backdrop-blur-sm transition-all duration-300 group-hover:border-emerald-400/30"
                 placeholder="¿Cuál es el motivo de tu mensaje?"
               />
@@ -64,7 +94,9 @@ const Contact = () => {
               </label>
               <textarea
                 id="message"
+                name="message"
                 rows={6}
+                required
                 className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-400/50 focus:border-transparent text-white backdrop-blur-sm transition-all duration-300 group-hover:border-emerald-400/30 resize-none"
                 placeholder="Cuéntame sobre tu proyecto o idea..."
               />

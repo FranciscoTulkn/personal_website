@@ -50,7 +50,7 @@ const Footer = () => {
               className="text-center md:text-right text-white/60"
             >
               <p className="flex items-center justify-center md:justify-end gap-2">
-              DevFJTR &copy; {new Date().getFullYear()} | Creado con el
+              Francisco Tulcán &copy; {new Date().getFullYear()} | Creado con el
                 <span className="text-red-500 animate-pulse text-xl">❤️</span>
               </p>
             </motion.div>

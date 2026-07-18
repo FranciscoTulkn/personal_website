@@ -1,0 +1,32 @@
+services:
+  portfolio-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: portfolio-devops:latest
+    container_name: portfolio-app
+    restart: unless-stopped
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      - NODE_ENV=production
+    ports:
+      - "127.0.0.1:3000:3000"
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:3000"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  app-network:
+    driver: bridge

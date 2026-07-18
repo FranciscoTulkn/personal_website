@@ -33,8 +33,8 @@ const MainHero = () => {
             </h1>
 
             <p className="text-lg text-white/70 mb-8 leading-relaxed max-w-2xl">
-              Desarrollador apasionado por crear experiencias web excepcionales y optimizar procesos de desarrollo. 
-              Especializado en React, TypeScript y arquitecturas cloud modernas.
+              Desarrollador Web Frontend y Tecnólogo ADSI apasionado por crear interfaces interactivas, accesibles y de alto rendimiento.
+              Especializado en React, Angular y JavaScript, en transición hacia el mundo DevOps.
             </p>
 
             {/* Badges */}
@@ -67,7 +67,7 @@ const MainHero = () => {
                 </svg>
               </motion.a>
               <motion.a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/franciscotulkn-lib-dev/"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.02 }}

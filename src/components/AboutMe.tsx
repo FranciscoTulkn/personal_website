@@ -3,29 +3,31 @@ import { motion } from 'framer-motion';
 
 const AboutMe = () => {
   const skills = [
+    { name: 'JavaScript', level: 85, color: 'from-yellow-400 to-yellow-600' },
     { name: 'React', level: 80, color: 'from-cyan-400 to-blue-500' },
-    { name: 'Next.js', level: 70, color: 'from-purple-600 to-purple-900' },
-    { name: 'Docker', level: 50, color: 'from-blue-400 to-blue-600' },
-    { name: 'AWS', level: 45, color: 'from-yellow-500 to-orange-500' },
-    { name: 'TypeScript', level: 65, color: 'from-blue-500 to-blue-700' },
-    { name: 'CI/CD', level: 40, color: 'from-green-400 to-emerald-600' },
+    { name: 'Angular', level: 65, color: 'from-red-500 to-rose-700' },
+    { name: 'Tailwind CSS', level: 80, color: 'from-teal-400 to-cyan-600' },
+    { name: 'Docker', level: 55, color: 'from-blue-400 to-blue-600' },
+    { name: 'AWS', level: 50, color: 'from-yellow-500 to-orange-500' },
+    { name: 'Jenkins', level: 45, color: 'from-red-400 to-red-600' },
+    { name: 'Git & GitHub', level: 75, color: 'from-orange-400 to-orange-600' },
   ];
 
   const experiences = [
     {
-      title: 'Frontend Development',
-      description: 'Especializado en crear interfaces modernas y responsivas utilizando las últimas tecnologías web.',
-      icon: '💻'
-    },
-    {
-      title: 'DevOps Engineering',
-      description: 'Implementación de pipelines CI/CD y gestión de infraestructura en la nube.',
+      title: 'Analista DevOps y Servicios TIC — ADAGGIO',
+      description: 'Gestión de servidores VPS, automatización de despliegues con Next.js y Django (Poetry), y uso de Jenkins y AWS para infraestructura y entrega continua (sept. 2024-presente).',
       icon: '🚀'
     },
     {
-      title: 'Cloud Architecture',
-      description: 'Diseño de arquitecturas escalables y resilientes en AWS.',
-      icon: '☁️'
+      title: 'Analista de Datos / Frontend — ADAGGIO',
+      description: 'Diseño y desarrollo de tableros interactivos consumiendo APIs RESTful, y optimización del rendimiento frontend de plataformas analíticas (2021-2024).',
+      icon: '💻'
+    },
+    {
+      title: 'Tecnólogo ADSI — SENA',
+      description: 'Formación en Análisis y Desarrollo de Sistemas de Información, base técnica en lógica de programación, bases de datos y desarrollo web (2020-2022).',
+      icon: '📘'
     }
   ];
 
@@ -43,8 +45,8 @@ const AboutMe = () => {
             Sobre Mí
           </h2>
           <p className="text-lg text-white/80 max-w-3xl mx-auto">
-            Desarrollador Web Frontend con experiencia en HTML, CSS, JavaScript y frameworks como React, Angular, Bootstrap y Materialize. Conocimientos en C#, Java y Python. 
-            Actualmente, en transición al mundo DevOps, con manejo de VPS, despliegues en Next.js y Django (usando Poetry), además de herramientas como Jenkins y AWS. Enfoque en el desarrollo de soluciones escalables, optimizadas y alineadas con los requerimientos del cliente.
+            Desarrollador Web Frontend en transición hacia DevOps, Tecnólogo en Análisis y Desarrollo de Sistemas de Información (ADSI), con experiencia en interfaces modernas y responsivas (React, Angular, Tailwind CSS) y en gestión de servidores VPS, automatización de despliegues y herramientas como Jenkins y AWS.
+            Con más de 10 años de trayectoria complementaria en atención al cliente y gestión de relaciones interpersonales, destaco por mi asertividad, comunicación proactiva y alta sinergia en equipos de desarrollo tecnológico.
           </p>
         </motion.div>
 
@@ -122,7 +124,7 @@ const AboutMe = () => {
                 <div className="text-emerald-400">const developer = {`{`}</div>
                 <div className="pl-4">
                   <span className="text-purple-400">name</span>: 
-                  <span className="text-yellow-300">&quot;TulDev&quot;</span>,
+                  <span className="text-yellow-300">&quot;Francisco Tulcán&quot;</span>,
                 </div>
                 <div className="pl-4">
                   <span className="text-purple-400">skills</span>: [

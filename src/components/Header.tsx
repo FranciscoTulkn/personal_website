@@ -32,12 +32,12 @@ const Header = () => {
           {/* Logo */}
           <Link href="/" className="group flex items-center">
             <div className="flex items-center relative">
-              <span className="text-4xl font-extrabold text-white tracking-wider">
-                Tul
+              <span className="text-2xl md:text-3xl font-extrabold text-white tracking-wider">
+                Francisco&nbsp;
               </span>
               <div className="flex">
-                <span className="text-4xl font-extrabold bg-gradient-to-r from-emerald-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent transition-all duration-300 group-hover:translate-y-[-2px]">
-                  Dev
+                <span className="text-2xl md:text-3xl font-extrabold bg-gradient-to-r from-emerald-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent transition-all duration-300 group-hover:translate-y-[-2px]">
+                  Tulcán
                 </span>
               </div>
               <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-emerald-400 via-cyan-400 to-teal-400 opacity-50 transition-opacity duration-300 group-hover:opacity-100"></div>
