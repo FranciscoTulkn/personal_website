@@ -1,35 +1,21 @@
 'use client';
 import { motion } from 'framer-motion';
+import { useLanguage } from '@/context/LanguageContext';
+
+const skills = [
+  { name: 'JavaScript', level: 85, color: 'from-yellow-400 to-yellow-600' },
+  { name: 'React', level: 80, color: 'from-cyan-400 to-blue-500' },
+  { name: 'Angular', level: 65, color: 'from-red-500 to-rose-700' },
+  { name: 'Tailwind CSS', level: 80, color: 'from-teal-400 to-cyan-600' },
+  { name: 'Docker', level: 55, color: 'from-blue-400 to-blue-600' },
+  { name: 'AWS', level: 50, color: 'from-yellow-500 to-orange-500' },
+  { name: 'Jenkins', level: 45, color: 'from-red-400 to-red-600' },
+  { name: 'Git & GitHub', level: 75, color: 'from-orange-400 to-orange-600' },
+];
 
 const AboutMe = () => {
-  const skills = [
-    { name: 'JavaScript', level: 85, color: 'from-yellow-400 to-yellow-600' },
-    { name: 'React', level: 80, color: 'from-cyan-400 to-blue-500' },
-    { name: 'Angular', level: 65, color: 'from-red-500 to-rose-700' },
-    { name: 'Tailwind CSS', level: 80, color: 'from-teal-400 to-cyan-600' },
-    { name: 'Docker', level: 55, color: 'from-blue-400 to-blue-600' },
-    { name: 'AWS', level: 50, color: 'from-yellow-500 to-orange-500' },
-    { name: 'Jenkins', level: 45, color: 'from-red-400 to-red-600' },
-    { name: 'Git & GitHub', level: 75, color: 'from-orange-400 to-orange-600' },
-  ];
-
-  const experiences = [
-    {
-      title: 'Analista DevOps y Servicios TIC — ADAGGIO',
-      description: 'Gestión de servidores VPS, automatización de despliegues con Next.js y Django (Poetry), y uso de Jenkins y AWS para infraestructura y entrega continua (sept. 2024-presente).',
-      icon: '🚀'
-    },
-    {
-      title: 'Analista de Datos / Frontend — ADAGGIO',
-      description: 'Diseño y desarrollo de tableros interactivos consumiendo APIs RESTful, y optimización del rendimiento frontend de plataformas analíticas (2021-2024).',
-      icon: '💻'
-    },
-    {
-      title: 'Tecnólogo ADSI — SENA',
-      description: 'Formación en Análisis y Desarrollo de Sistemas de Información, base técnica en lógica de programación, bases de datos y desarrollo web (2020-2022).',
-      icon: '📘'
-    }
-  ];
+  const { t } = useLanguage();
+  const experiences = t.about.experiences;
 
   return (
     <section id="about" className="py-20 px-4 relative overflow-hidden">
@@ -42,11 +28,10 @@ const AboutMe = () => {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Sobre Mí
+            {t.about.title}
           </h2>
           <p className="text-lg text-white/80 max-w-3xl mx-auto">
-            Desarrollador Web Frontend en transición hacia DevOps, Tecnólogo en Análisis y Desarrollo de Sistemas de Información (ADSI), con experiencia en interfaces modernas y responsivas (React, Angular, Tailwind CSS) y en gestión de servidores VPS, automatización de despliegues y herramientas como Jenkins y AWS.
-            Con más de 10 años de trayectoria complementaria en atención al cliente y gestión de relaciones interpersonales, destaco por mi asertividad, comunicación proactiva y alta sinergia en equipos de desarrollo tecnológico.
+            {t.about.bio}
           </p>
         </motion.div>
 
@@ -77,7 +62,7 @@ const AboutMe = () => {
           className="grid md:grid-cols-2 gap-12"
         >
           <div>
-            <h3 className="text-2xl font-bold text-white mb-6">Habilidades Técnicas</h3>
+            <h3 className="text-2xl font-bold text-white mb-6">{t.about.skillsTitle}</h3>
             <div className="space-y-6">
               {skills.map((skill, index) => (
                 <motion.div
@@ -132,8 +117,8 @@ const AboutMe = () => {
                   <span className="text-yellow-300">&quot;DevOps&quot;</span>],
                 </div>
                 <div className="pl-4">
-                  <span className="text-purple-400">passion</span>: 
-                  <span className="text-yellow-300">&quot;Creating amazing web experiences&quot;</span>
+                  <span className="text-purple-400">passion</span>:
+                  <span className="text-yellow-300">&quot;{t.about.codeMock.passionValue}&quot;</span>
                 </div>
                 <div>{`}`};</div>
               </div>

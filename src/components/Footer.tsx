@@ -1,7 +1,10 @@
 'use client';
 import { motion } from 'framer-motion';
+import { useLanguage } from '@/context/LanguageContext';
 
 const Footer = () => {
+  const { t } = useLanguage();
+
   return (
     <footer className="py-8 px-4 relative overflow-hidden">
       <div className="max-w-7xl mx-auto">
@@ -50,7 +53,7 @@ const Footer = () => {
               className="text-center md:text-right text-white/60"
             >
               <p className="flex items-center justify-center md:justify-end gap-2">
-              Francisco Tulcán &copy; {new Date().getFullYear()} | Creado con el
+              Francisco Tulcán &copy; {new Date().getFullYear()} | {t.footer.madeWith}
                 <span className="text-red-500 animate-pulse text-xl">❤️</span>
               </p>
             </motion.div>

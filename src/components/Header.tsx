@@ -1,10 +1,12 @@
 'use client';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import { useLanguage } from '@/context/LanguageContext';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { language, toggleLanguage, t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,10 +17,10 @@ const Header = () => {
   }, []);
 
   const menuItems = [
-    { label: 'Inicio', href: '/' },
-    { label: 'Sobre Mí', href: '#about' },
-    { label: 'Proyectos', href: '#projects' },
-    { label: 'Contacto', href: '#contact' },
+    { label: t.nav.home, href: '/' },
+    { label: t.nav.about, href: '#about' },
+    { label: t.nav.projects, href: '#projects' },
+    { label: t.nav.contact, href: '#contact' },
   ];
 
   return (
@@ -44,38 +46,49 @@ const Header = () => {
             </div>
           </Link>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex space-x-8">
-            {menuItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="relative text-lg font-medium group text-white/90 hover:text-white transition-colors duration-300"
-              >
-                {item.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-emerald-400 via-cyan-400 to-teal-400 transition-all duration-300 group-hover:w-full opacity-80 group-hover:opacity-100" />
-              </Link>
-            ))}
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2 rounded-lg bg-black/20 backdrop-blur-xl transition-transform duration-300 hover:scale-105 active:scale-95"
-            onClick={() => setIsOpen(!isOpen)}
-            aria-label="Toggle menu"
-          >
-            <div className="space-y-2">
-              <span className={`block w-8 h-0.5 transition-all duration-300 bg-white/80 ${
-                isOpen ? 'rotate-45 translate-y-2.5' : ''
-              }`} />
-              <span className={`block w-8 h-0.5 transition-all duration-300 bg-white/80 ${
-                isOpen ? 'opacity-0' : ''
-              }`} />
-              <span className={`block w-8 h-0.5 transition-all duration-300 bg-white/80 ${
-                isOpen ? '-rotate-45 -translate-y-2.5' : ''
-              }`} />
+          <div className="flex items-center gap-3">
+            {/* Desktop Menu */}
+            <div className="hidden md:flex items-center space-x-8 mr-2">
+              {menuItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="relative text-lg font-medium group text-white/90 hover:text-white transition-colors duration-300"
+                >
+                  {item.label}
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-emerald-400 via-cyan-400 to-teal-400 transition-all duration-300 group-hover:w-full opacity-80 group-hover:opacity-100" />
+                </Link>
+              ))}
             </div>
-          </button>
+
+            {/* Language Toggle */}
+            <button
+              onClick={toggleLanguage}
+              aria-label="Toggle language"
+              className="px-3 py-1.5 rounded-full text-sm font-semibold bg-white/5 text-white/80 border border-white/10 hover:bg-white/10 hover:text-white transition-colors"
+            >
+              {language === 'es' ? 'EN' : 'ES'}
+            </button>
+
+            {/* Mobile Menu Button */}
+            <button
+              className="md:hidden p-2 rounded-lg bg-black/20 backdrop-blur-xl transition-transform duration-300 hover:scale-105 active:scale-95"
+              onClick={() => setIsOpen(!isOpen)}
+              aria-label="Toggle menu"
+            >
+              <div className="space-y-2">
+                <span className={`block w-8 h-0.5 transition-all duration-300 bg-white/80 ${
+                  isOpen ? 'rotate-45 translate-y-2.5' : ''
+                }`} />
+                <span className={`block w-8 h-0.5 transition-all duration-300 bg-white/80 ${
+                  isOpen ? 'opacity-0' : ''
+                }`} />
+                <span className={`block w-8 h-0.5 transition-all duration-300 bg-white/80 ${
+                  isOpen ? '-rotate-45 -translate-y-2.5' : ''
+                }`} />
+              </div>
+            </button>
+          </div>
         </div>
 
         {/* Mobile Menu */}

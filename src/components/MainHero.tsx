@@ -1,10 +1,13 @@
 'use client';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { useLanguage } from '@/context/LanguageContext';
 
 const MainHero = () => {
+  const { t } = useLanguage();
+
   return (
-    <section className="min-h-screen pt-32 pb-20 px-4 relative overflow-hidden">
+    <section className="min-h-screen flex flex-col justify-center pt-28 pb-20 px-4 relative overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Contenido */}
@@ -21,35 +24,34 @@ const MainHero = () => {
               className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-emerald-400/10 text-emerald-400 border border-emerald-400/20 mb-6"
             >
               <span className="w-2 h-2 bg-emerald-400 rounded-full mr-2 animate-pulse"></span>
-              Disponible para trabajar
+              {t.hero.badge}
             </motion.div>
 
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              <span className="text-white">Frontend Developer</span>
+              <span className="text-white">{t.hero.titleLine1}</span>
               <br />
               <span className="bg-gradient-to-r from-emerald-400 via-cyan-400 to-teal-400 bg-clip-text text-transparent">
-                & DevOps Engineer
+                {t.hero.titleLine2}
               </span>
             </h1>
 
             <p className="text-lg text-white/70 mb-8 leading-relaxed max-w-2xl">
-              Desarrollador Web Frontend y Tecnólogo ADSI apasionado por crear interfaces interactivas, accesibles y de alto rendimiento.
-              Especializado en React, Angular y JavaScript, en transición hacia el mundo DevOps.
+              {t.hero.description}
             </p>
 
             {/* Badges */}
             <div className="flex flex-wrap gap-3 mb-8">
               <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-white/5 text-white/70 border border-white/10 backdrop-blur-sm">
                 <span className="mr-2">📍</span>
-                Bogotá, Colombia
+                {t.hero.location}
               </span>
               <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-white/5 text-white/70 border border-white/10 backdrop-blur-sm">
                 <span className="mr-2">💻</span>
-                Frontend
+                {t.hero.frontendBadge}
               </span>
               <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-white/5 text-white/70 border border-white/10 backdrop-blur-sm">
                 <span className="mr-2">🚀</span>
-                DevOps
+                {t.hero.devopsBadge}
               </span>
             </div>
 
@@ -61,9 +63,34 @@ const MainHero = () => {
                 whileTap={{ scale: 0.98 }}
                 className="inline-flex items-center px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-400 via-cyan-400 to-emerald-400 text-white font-medium shadow-lg shadow-emerald-400/20 hover:shadow-xl hover:shadow-emerald-400/30 transition-shadow"
               >
-                Contáctame
+                {t.hero.contactCta}
                 <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </motion.a>
+              <motion.a
+                href="/CV_Francisco_Tulcan_Full.pdf"
+                download
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="inline-flex items-center px-6 py-3 rounded-xl bg-white/5 text-white font-medium border border-white/10 hover:bg-white/10 transition-colors"
+              >
+                {t.hero.cvCta}
+                <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3" />
+                </svg>
+              </motion.a>
+              <motion.a
+                href="#projects"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="inline-flex items-center px-6 py-3 rounded-xl bg-white/5 text-white font-medium border border-white/10 hover:bg-white/10 transition-colors"
+              >
+                {t.hero.projectsCta}
+                <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </motion.a>
               <motion.a
@@ -74,7 +101,7 @@ const MainHero = () => {
                 whileTap={{ scale: 0.98 }}
                 className="inline-flex items-center px-6 py-3 rounded-xl bg-white/5 text-white font-medium border border-white/10 hover:bg-white/10 transition-colors"
               >
-                LinkedIn
+                {t.hero.linkedinCta}
                 <svg className="w-5 h-5 ml-2" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
                 </svg>

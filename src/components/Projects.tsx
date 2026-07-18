@@ -1,52 +1,51 @@
 'use client';
 import { motion } from 'framer-motion';
+import { useLanguage } from '@/context/LanguageContext';
+
+interface ProjectMeta {
+  tags: string[];
+  icon: string;
+  link: string;
+  demo?: string;
+}
+
+const projectMeta: ProjectMeta[] = [
+  {
+    tags: ['Next.js', 'Tailwind', 'Framer Motion'],
+    icon: '✨',
+    link: 'https://github.com/FranciscoTulkn/particles-landingpage-next-tailwind-framer-motion',
+  },
+  {
+    tags: ['TypeScript', 'Dashboard'],
+    icon: '📊',
+    link: 'https://github.com/FranciscoTulkn/dashboard-proyect',
+  },
+  {
+    tags: ['Next.js', 'Tailwind', 'Zustand', 'TypeScript'],
+    icon: '🛒',
+    link: 'https://github.com/FranciscoTulkn/Ecommers-TeslaShop',
+  },
+  {
+    tags: ['React', 'API REST'],
+    icon: '🎮',
+    link: 'https://github.com/FranciscoTulkn/pokedex-react',
+    demo: 'https://pokedex-react-weld.vercel.app',
+  },
+  {
+    tags: ['JavaScript', 'UI/UX'],
+    icon: '💼',
+    link: 'https://github.com/FranciscoTulkn/portal-job',
+  },
+  {
+    tags: ['TypeScript', 'API REST', 'Node.js'],
+    icon: '📚',
+    link: 'https://github.com/FranciscoTulkn/Backend-Libros-API',
+  },
+];
 
 const Projects = () => {
-  const projects = [
-    {
-      title: 'Particles Landing Page',
-      description: 'Landing page interactiva con animaciones de partículas y transiciones fluidas, construida con Next.js, Tailwind CSS y Framer Motion.',
-      tags: ['Next.js', 'Tailwind', 'Framer Motion'],
-      icon: '✨',
-      link: 'https://github.com/FranciscoTulkn/particles-landingpage-next-tailwind-framer-motion'
-    },
-    {
-      title: 'Dashboard Proyect',
-      description: 'Panel de control interactivo para visualización y gestión de datos, desarrollado en TypeScript con foco en usabilidad.',
-      tags: ['TypeScript', 'Dashboard'],
-      icon: '📊',
-      link: 'https://github.com/FranciscoTulkn/dashboard-proyect'
-    },
-    {
-      title: 'TeslaShop Ecommerce',
-      description: 'E-commerce construido con Next.js, Tailwind CSS y Zustand para el manejo de estado, con enfoque en rendimiento y UX.',
-      tags: ['Next.js', 'Tailwind', 'Zustand', 'TypeScript'],
-      icon: '🛒',
-      link: 'https://github.com/FranciscoTulkn/Ecommers-TeslaShop'
-    },
-    {
-      title: 'Pokedex React',
-      description: 'Pokedex interactiva construida en React, consumiendo la PokeAPI en tiempo real con búsqueda y detalle por Pokémon.',
-      tags: ['React', 'API REST'],
-      icon: '🎮',
-      link: 'https://github.com/FranciscoTulkn/pokedex-react',
-      demo: 'https://pokedex-react-weld.vercel.app'
-    },
-    {
-      title: 'Portal Job',
-      description: 'Portal de búsqueda y publicación de empleos, con listados dinámicos e interfaz responsiva en JavaScript.',
-      tags: ['JavaScript', 'UI/UX'],
-      icon: '💼',
-      link: 'https://github.com/FranciscoTulkn/portal-job'
-    },
-    {
-      title: 'Backend Libros API',
-      description: 'API REST en TypeScript para la gestión de una biblioteca: catálogo de libros, préstamos y usuarios.',
-      tags: ['TypeScript', 'API REST', 'Node.js'],
-      icon: '📚',
-      link: 'https://github.com/FranciscoTulkn/Backend-Libros-API'
-    }
-  ];
+  const { t } = useLanguage();
+  const projects = t.projects.items.map((item, index) => ({ ...item, ...projectMeta[index] }));
 
   return (
     <section id="projects" className="py-20 px-4 relative overflow-hidden">
@@ -59,11 +58,10 @@ const Projects = () => {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Proyectos Destacados
+            {t.projects.title}
           </h2>
           <p className="text-lg text-white/80 max-w-3xl mx-auto">
-            Una selección de mis proyectos más relevantes que demuestran mis habilidades
-            en desarrollo frontend y DevOps.
+            {t.projects.subtitle}
           </p>
         </motion.div>
 
@@ -115,7 +113,7 @@ const Projects = () => {
                     rel="noopener noreferrer"
                     className="text-sm font-medium text-white/80 hover:text-emerald-400 transition-colors"
                   >
-                    Código →
+                    {t.projects.codeLink} →
                   </a>
                   {project.demo && (
                     <a
@@ -124,7 +122,7 @@ const Projects = () => {
                       rel="noopener noreferrer"
                       className="text-sm font-medium text-emerald-400 hover:text-emerald-300 transition-colors"
                     >
-                      Ver demo →
+                      {t.projects.demoLink} →
                     </a>
                   )}
                 </div>
@@ -148,7 +146,7 @@ const Projects = () => {
             href="https://github.com/FranciscoTulkn"
             className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 backdrop-blur-sm rounded-xl border border-white/10 hover:bg-white/20 transition-colors"
           >
-            Ver más proyectos
+            {t.projects.viewMore}
             <svg
               className="w-5 h-5"
               fill="none"
