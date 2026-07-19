@@ -51,7 +51,7 @@ pipeline {
         stage('Build Image') {
             steps {
                 sh """
-                    docker build -f docker/Dockerfile \
+                    docker build -f Dockerfile \
                         -t ${env.IMAGE_NAME}:${env.GIT_SHORT_COMMIT} \
                         -t ${env.IMAGE_NAME}:latest .
                 """
