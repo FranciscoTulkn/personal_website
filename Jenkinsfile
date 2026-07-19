@@ -5,8 +5,6 @@ pipeline {
         IMAGE_NAME = "portfolio-devops"
         CONTAINER_NAME = "portfolio-app"
         COMPOSE_FILE = "docker-compose.yml"
-        GIT_SHORT_COMMIT = ""
-        PREVIOUS_IMAGE_TAG = ""
     }
 
     options {
@@ -32,10 +30,19 @@ pipeline {
         stage('Save Previous Image Tag') {
             steps {
                 script {
-                    env.PREVIOUS_IMAGE_TAG = sh(
-                        script: "docker inspect --format='{{.Config.Image}}' ${CONTAINER_NAME} 2>/dev/null || echo 'none'",
+                    def exists = sh(
+                        script: "docker ps -aq -f name=^${CONTAINER_NAME}\$",
                         returnStdout: true
                     ).trim()
+
+                    if (exists) {
+                        env.PREVIOUS_IMAGE_TAG = sh(
+                            script: "docker inspect --format='{{.Config.Image}}' ${CONTAINER_NAME}",
+                            returnStdout: true
+                        ).trim()
+                    } else {
+                        env.PREVIOUS_IMAGE_TAG = "none"
+                    }
                     echo "Previous image was: ${env.PREVIOUS_IMAGE_TAG}"
                 }
             }
@@ -45,17 +52,15 @@ pipeline {
             steps {
                 sh """
                     docker build -f docker/Dockerfile \
-                        -t ${IMAGE_NAME}:${GIT_SHORT_COMMIT} \
-                        -t ${IMAGE_NAME}:latest .
+                        -t ${env.IMAGE_NAME}:${env.GIT_SHORT_COMMIT} \
+                        -t ${env.IMAGE_NAME}:latest .
                 """
             }
         }
 
         stage('Deploy') {
             steps {
-                sh """
-                    docker compose -f ${COMPOSE_FILE} up -d --force-recreate
-                """
+                sh "docker compose -f ${env.COMPOSE_FILE} up -d --force-recreate"
             }
         }
 
@@ -69,7 +74,7 @@ pipeline {
                     while (!healthy && attempts < maxAttempts) {
                         sleep(time: 5, unit: 'SECONDS')
                         def status = sh(
-                            script: "docker inspect --format='{{.State.Health.Status}}' ${CONTAINER_NAME} || echo 'unknown'",
+                            script: "docker inspect --format='{{.State.Health.Status}}' ${env.CONTAINER_NAME} || echo 'unknown'",
                             returnStdout: true
                         ).trim()
                         echo "Health status attempt ${attempts + 1}: ${status}"
@@ -93,7 +98,7 @@ pipeline {
             steps {
                 sh """
                     docker image prune -f
-                    docker images ${IMAGE_NAME} --format '{{.Tag}}' | grep -v -E 'latest|${GIT_SHORT_COMMIT}' | xargs -r -I {} docker rmi ${IMAGE_NAME}:{} || true
+                    docker images ${env.IMAGE_NAME} --format '{{.Tag}}' | grep -v -E 'latest|${env.GIT_SHORT_COMMIT}' | xargs -r -I {} docker rmi ${env.IMAGE_NAME}:{} || true
                 """
             }
         }
@@ -103,10 +108,10 @@ pipeline {
         failure {
             script {
                 echo "Deployment failed. Attempting rollback..."
-                if (env.PREVIOUS_IMAGE_TAG != 'none' && env.PREVIOUS_IMAGE_TAG != '') {
+                if (env.PREVIOUS_IMAGE_TAG && env.PREVIOUS_IMAGE_TAG != 'none') {
                     sh """
-                        docker tag ${env.PREVIOUS_IMAGE_TAG} ${IMAGE_NAME}:latest || true
-                        docker compose -f ${COMPOSE_FILE} up -d --force-recreate
+                        docker tag ${env.PREVIOUS_IMAGE_TAG} ${env.IMAGE_NAME}:latest || true
+                        docker compose -f ${env.COMPOSE_FILE} up -d --force-recreate
                     """
                     echo "Rollback completed to previous image: ${env.PREVIOUS_IMAGE_TAG}"
                 } else {
@@ -118,7 +123,7 @@ pipeline {
             echo "Deployment successful! Commit ${env.GIT_SHORT_COMMIT} is live."
         }
         always {
-            sh "docker compose -f ${COMPOSE_FILE} ps"
+            sh "docker compose -f ${env.COMPOSE_FILE} ps"
         }
     }
 }
