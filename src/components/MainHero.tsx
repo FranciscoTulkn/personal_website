@@ -7,9 +7,9 @@ const MainHero = () => {
   const { t } = useLanguage();
 
   return (
-    <section className="min-h-screen flex flex-col justify-center pt-28 pb-20 px-4 relative overflow-hidden">
+    <section className="min-h-screen flex flex-col justify-center pt-28 pb-16 sm:pb-20 px-4 relative overflow-hidden">
       <div className="max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
           {/* Contenido */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -27,7 +27,7 @@ const MainHero = () => {
               {t.hero.badge}
             </motion.div>
 
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+            <h1 className="text-3xl min-[400px]:text-4xl sm:text-5xl md:text-6xl font-bold mb-6">
               <span className="text-white">{t.hero.titleLine1}</span>
               <br />
               <span className="bg-gradient-to-r from-emerald-400 via-cyan-400 to-teal-400 bg-clip-text text-transparent">
@@ -35,7 +35,7 @@ const MainHero = () => {
               </span>
             </h1>
 
-            <p className="text-lg text-white/70 mb-8 leading-relaxed max-w-2xl">
+            <p className="text-base sm:text-lg text-white/70 mb-8 leading-relaxed max-w-2xl">
               {t.hero.description}
             </p>
 
@@ -56,7 +56,7 @@ const MainHero = () => {
             </div>
 
             {/* Botones */}
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-3 sm:gap-4 [&>a]:justify-center [&>a]:px-5 sm:[&>a]:px-6">
               <motion.a
                 href="#contact"
                 whileHover={{ scale: 1.02 }}
@@ -116,7 +116,7 @@ const MainHero = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="relative"
           >
-            <div className="relative w-full max-w-md mx-auto">
+            <div className="relative w-full max-w-[16rem] min-[400px]:max-w-xs sm:max-w-md mx-auto">
               {/* Círculos decorativos animados */}
               <motion.div
                 animate={{
@@ -160,7 +160,7 @@ const MainHero = () => {
                   alt="Profile photo"
                   width={500}
                   height={500}
-                  className="object-cover hover:scale-105 transition-transform duration-300"
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                   priority
                 />
                 {/* Efecto de brillo */}

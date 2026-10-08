@@ -18,7 +18,7 @@ const AboutMe = () => {
   const experiences = t.about.experiences;
 
   return (
-    <section id="about" className="py-20 px-4 relative overflow-hidden">
+    <section id="about" className="py-16 sm:py-20 px-4 relative overflow-hidden scroll-mt-16">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -36,7 +36,7 @@ const AboutMe = () => {
         </motion.div>
 
         {/* Experience Cards */}
-        <div className="grid md:grid-cols-3 gap-8 mb-20">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-16 sm:mb-20">
           {experiences.map((exp, index) => (
             <motion.div
               key={exp.title}
@@ -59,7 +59,7 @@ const AboutMe = () => {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="grid md:grid-cols-2 gap-12"
+          className="grid lg:grid-cols-2 gap-10 lg:gap-12"
         >
           <div>
             <h3 className="text-2xl font-bold text-white mb-6">{t.about.skillsTitle}</h3>
@@ -97,9 +97,9 @@ const AboutMe = () => {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="relative aspect-video"
+            className="relative lg:aspect-video"
           >
-            <div className="absolute inset-0 bg-black/40 backdrop-blur-xl rounded-2xl p-4 border border-white/10 shadow-2xl">
+            <div className="lg:absolute lg:inset-0 overflow-x-auto bg-black/40 backdrop-blur-xl rounded-2xl p-4 border border-white/10 shadow-2xl">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-3 h-3 rounded-full bg-red-400" />
                 <div className="w-3 h-3 rounded-full bg-yellow-400" />

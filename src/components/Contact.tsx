@@ -54,11 +54,11 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-20 px-4 relative overflow-hidden">
+    <section id="contact" className="py-16 sm:py-20 px-4 relative overflow-hidden scroll-mt-16">
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-16">
           <span className="text-emerald-400 font-medium mb-4 block">{t.contact.eyebrow}</span>
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white via-white/90 to-emerald-400 bg-clip-text text-transparent">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white via-white/90 to-emerald-400 bg-clip-text text-transparent">
             {t.contact.title}
           </h2>
           <p className="text-lg text-white/70 max-w-2xl mx-auto leading-relaxed">
@@ -66,7 +66,7 @@ const Contact = () => {
           </p>
           <a
             href={`mailto:${CONTACT_EMAIL}`}
-            className="inline-flex items-center gap-2 mt-4 text-white/80 hover:text-emerald-400 transition-colors"
+            className="inline-flex items-center gap-2 mt-4 text-sm sm:text-base break-all text-white/80 hover:text-emerald-400 transition-colors"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -77,7 +77,7 @@ const Contact = () => {
 
         <div className="max-w-2xl mx-auto relative">
           <form
-            className="space-y-6 backdrop-blur-xl bg-white/5 p-8 rounded-2xl border border-white/10 shadow-2xl"
+            className="space-y-6 backdrop-blur-xl bg-white/5 p-5 sm:p-8 rounded-2xl border border-white/10 shadow-2xl"
             onSubmit={handleSubmit}
           >
             <div className="grid md:grid-cols-2 gap-6">
