@@ -34,11 +34,11 @@ const Header = () => {
           {/* Logo */}
           <Link href="/" className="group flex items-center">
             <div className="flex items-center relative">
-              <span className="text-2xl md:text-3xl font-extrabold text-white tracking-wider">
+              <span className="text-lg min-[400px]:text-2xl md:text-3xl font-extrabold text-white tracking-wide sm:tracking-wider">
                 Francisco&nbsp;
               </span>
               <div className="flex">
-                <span className="text-2xl md:text-3xl font-extrabold bg-gradient-to-r from-emerald-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent transition-all duration-300 group-hover:translate-y-[-2px]">
+                <span className="text-lg min-[400px]:text-2xl md:text-3xl font-extrabold bg-gradient-to-r from-emerald-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent transition-all duration-300 group-hover:translate-y-[-2px]">
                   Tulcán
                 </span>
               </div>
@@ -77,7 +77,7 @@ const Header = () => {
               aria-label="Toggle menu"
             >
               <div className="space-y-2">
-                <span className={`block w-8 h-0.5 transition-all duration-300 bg-white/80 ${
+                <span className={`block w-6 sm:w-8 h-0.5 transition-all duration-300 bg-white/80 ${
                   isOpen ? 'rotate-45 translate-y-2.5' : ''
                 }`} />
                 <span className={`block w-8 h-0.5 transition-all duration-300 bg-white/80 ${

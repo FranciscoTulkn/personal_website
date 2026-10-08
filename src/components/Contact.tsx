@@ -1,31 +1,64 @@
 'use client';
-import { FormEvent } from 'react';
+import { FormEvent, useEffect, useRef, useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 
 const CONTACT_EMAIL = 'tufran13@gmail.com';
+// FormSubmit: servicio gratuito, envía el formulario al correo sin abrir el cliente de correo.
+const FORM_ENDPOINT = `https://formsubmit.co/ajax/${CONTACT_EMAIL}`;
+const REDIRECT_DELAY_MS = 4000;
+
+type Status = 'idle' | 'sending' | 'success' | 'error';
 
 const Contact = () => {
   const { t } = useLanguage();
+  const [status, setStatus] = useState<Status>('idle');
+  const timerRef = useRef<ReturnType<typeof setTimeout>>();
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  useEffect(() => () => clearTimeout(timerRef.current), []);
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
-    const name = (form.elements.namedItem('name') as HTMLInputElement).value;
-    const email = (form.elements.namedItem('email') as HTMLInputElement).value;
-    const subject = (form.elements.namedItem('subject') as HTMLInputElement).value;
-    const message = (form.elements.namedItem('message') as HTMLTextAreaElement).value;
+    const field = (n: string) =>
+      (form.elements.namedItem(n) as HTMLInputElement | HTMLTextAreaElement).value;
+    const name = field('name');
 
-    const mailSubject = encodeURIComponent(subject || `${t.contact.subjectPrefix} ${name}`);
-    const mailBody = encodeURIComponent(`${message}\n\n— ${name} (${email})`);
-    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${mailSubject}&body=${mailBody}`;
+    setStatus('sending');
+    try {
+      const res = await fetch(FORM_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          name,
+          email: field('email'),
+          message: field('message'),
+          _subject: field('subject') || `${t.contact.subjectPrefix} ${name}`,
+          _replyto: field('email'),
+          _template: 'table',
+          _captcha: 'false',
+          _honey: field('_honey'),
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok || data.success === 'false' || data.success === false) throw new Error();
+
+      form.reset();
+      setStatus('success');
+      timerRef.current = setTimeout(() => {
+        setStatus('idle');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, REDIRECT_DELAY_MS);
+    } catch {
+      setStatus('error');
+    }
   };
 
   return (
-    <section id="contact" className="py-20 px-4 relative overflow-hidden">
+    <section id="contact" className="py-16 sm:py-20 px-4 relative overflow-hidden scroll-mt-16">
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-16">
           <span className="text-emerald-400 font-medium mb-4 block">{t.contact.eyebrow}</span>
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white via-white/90 to-emerald-400 bg-clip-text text-transparent">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white via-white/90 to-emerald-400 bg-clip-text text-transparent">
             {t.contact.title}
           </h2>
           <p className="text-lg text-white/70 max-w-2xl mx-auto leading-relaxed">
@@ -33,7 +66,7 @@ const Contact = () => {
           </p>
           <a
             href={`mailto:${CONTACT_EMAIL}`}
-            className="inline-flex items-center gap-2 mt-4 text-white/80 hover:text-emerald-400 transition-colors"
+            className="inline-flex items-center gap-2 mt-4 text-sm sm:text-base break-all text-white/80 hover:text-emerald-400 transition-colors"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -44,7 +77,7 @@ const Contact = () => {
 
         <div className="max-w-2xl mx-auto relative">
           <form
-            className="space-y-6 backdrop-blur-xl bg-white/5 p-8 rounded-2xl border border-white/10 shadow-2xl"
+            className="space-y-6 backdrop-blur-xl bg-white/5 p-5 sm:p-8 rounded-2xl border border-white/10 shadow-2xl"
             onSubmit={handleSubmit}
           >
             <div className="grid md:grid-cols-2 gap-6">
@@ -104,13 +137,25 @@ const Contact = () => {
               />
               <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-emerald-400/20 via-cyan-400/20 to-emerald-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
             </div>
+            <input type="text" name="_honey" tabIndex={-1} autoComplete="off" className="hidden" />
+            {status === 'success' && (
+              <p role="status" className="text-emerald-400 text-center bg-emerald-400/10 border border-emerald-400/30 rounded-xl px-4 py-3">
+                {t.contact.form.success}
+              </p>
+            )}
+            {status === 'error' && (
+              <p role="alert" className="text-red-400 text-center bg-red-400/10 border border-red-400/30 rounded-xl px-4 py-3">
+                {t.contact.form.error}
+              </p>
+            )}
             <button
               type="submit"
-              className="relative w-full group overflow-hidden transition-all duration-300 transform hover:-translate-y-1"
+              disabled={status === 'sending' || status === 'success'}
+              className="relative w-full group overflow-hidden transition-all duration-300 transform hover:-translate-y-1 disabled:opacity-60 disabled:pointer-events-none"
             >
               <div className="relative px-8 py-4 bg-gradient-to-r from-emerald-400 via-cyan-400 to-emerald-400 rounded-xl shadow-lg group-hover:shadow-emerald-400/20 transition-all duration-300">
                 <span className="relative z-10 text-white font-medium text-lg">
-                  {t.contact.form.submit}
+                  {status === 'sending' ? t.contact.form.sending : t.contact.form.submit}
                 </span>
                 <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 via-cyan-500 to-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
