@@ -1,23 +1,56 @@
 'use client';
-import { FormEvent } from 'react';
+import { FormEvent, useEffect, useRef, useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 
 const CONTACT_EMAIL = 'tufran13@gmail.com';
+// FormSubmit: servicio gratuito, envía el formulario al correo sin abrir el cliente de correo.
+const FORM_ENDPOINT = `https://formsubmit.co/ajax/${CONTACT_EMAIL}`;
+const REDIRECT_DELAY_MS = 4000;
+
+type Status = 'idle' | 'sending' | 'success' | 'error';
 
 const Contact = () => {
   const { t } = useLanguage();
+  const [status, setStatus] = useState<Status>('idle');
+  const timerRef = useRef<ReturnType<typeof setTimeout>>();
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  useEffect(() => () => clearTimeout(timerRef.current), []);
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
-    const name = (form.elements.namedItem('name') as HTMLInputElement).value;
-    const email = (form.elements.namedItem('email') as HTMLInputElement).value;
-    const subject = (form.elements.namedItem('subject') as HTMLInputElement).value;
-    const message = (form.elements.namedItem('message') as HTMLTextAreaElement).value;
+    const field = (n: string) =>
+      (form.elements.namedItem(n) as HTMLInputElement | HTMLTextAreaElement).value;
+    const name = field('name');
 
-    const mailSubject = encodeURIComponent(subject || `${t.contact.subjectPrefix} ${name}`);
-    const mailBody = encodeURIComponent(`${message}\n\n— ${name} (${email})`);
-    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${mailSubject}&body=${mailBody}`;
+    setStatus('sending');
+    try {
+      const res = await fetch(FORM_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          name,
+          email: field('email'),
+          message: field('message'),
+          _subject: field('subject') || `${t.contact.subjectPrefix} ${name}`,
+          _replyto: field('email'),
+          _template: 'table',
+          _captcha: 'false',
+          _honey: field('_honey'),
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok || data.success === 'false' || data.success === false) throw new Error();
+
+      form.reset();
+      setStatus('success');
+      timerRef.current = setTimeout(() => {
+        setStatus('idle');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, REDIRECT_DELAY_MS);
+    } catch {
+      setStatus('error');
+    }
   };
 
   return (
@@ -104,13 +137,25 @@ const Contact = () => {
               />
               <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-emerald-400/20 via-cyan-400/20 to-emerald-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
             </div>
+            <input type="text" name="_honey" tabIndex={-1} autoComplete="off" className="hidden" />
+            {status === 'success' && (
+              <p role="status" className="text-emerald-400 text-center bg-emerald-400/10 border border-emerald-400/30 rounded-xl px-4 py-3">
+                {t.contact.form.success}
+              </p>
+            )}
+            {status === 'error' && (
+              <p role="alert" className="text-red-400 text-center bg-red-400/10 border border-red-400/30 rounded-xl px-4 py-3">
+                {t.contact.form.error}
+              </p>
+            )}
             <button
               type="submit"
-              className="relative w-full group overflow-hidden transition-all duration-300 transform hover:-translate-y-1"
+              disabled={status === 'sending' || status === 'success'}
+              className="relative w-full group overflow-hidden transition-all duration-300 transform hover:-translate-y-1 disabled:opacity-60 disabled:pointer-events-none"
             >
               <div className="relative px-8 py-4 bg-gradient-to-r from-emerald-400 via-cyan-400 to-emerald-400 rounded-xl shadow-lg group-hover:shadow-emerald-400/20 transition-all duration-300">
                 <span className="relative z-10 text-white font-medium text-lg">
-                  {t.contact.form.submit}
+                  {status === 'sending' ? t.contact.form.sending : t.contact.form.submit}
                 </span>
                 <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 via-cyan-500 to-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
